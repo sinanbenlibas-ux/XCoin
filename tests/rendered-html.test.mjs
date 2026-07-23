@@ -22,15 +22,16 @@ async function render() {
   );
 }
 
-test("server-renders the XCoin launch page", async () => {
+test("server-renders the XQNT Coin launch page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>XCoin — Built for the Community<\/title>/i);
+  assert.match(html, /<title>XQNT Coin — X Quantum Network Token<\/title>/i);
   assert.match(html, /The next chapter/);
   assert.match(html, /Launching soon/i);
+  assert.match(html, /X Quantum Network Token/i);
   assert.match(html, /1,000,000,000/);
   assert.match(html, /Proposed tokenomics/i);
   assert.match(html, /No presale\. No contract address\./i);

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
+import { siteConfig } from "./site-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,12 +27,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase,
-    title: "XCoin — Built for the Community",
+    title: "XQNT Coin — X Quantum Network Token",
     description:
-      "XCoin is a community-first digital token experiment built around participation, transparency, and meaningful utility.",
+      "XQNT Coin is a community-first digital token experiment built around open networks, participation, transparency, and meaningful utility.",
     keywords: [
-      "XCoin",
-      "XCN",
+      siteConfig.brand.name,
+      siteConfig.brand.shortName,
+      siteConfig.brand.expansion,
       "community token",
       "digital community",
       "token project",
@@ -40,24 +42,24 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: "/",
     },
     openGraph: {
-      title: "XCoin — Built for the Community",
+      title: "XQNT Coin — X Quantum Network Token",
       description:
         "A community-first digital token experiment. Launching soon.",
       type: "website",
       locale: "en_US",
-      siteName: "XCoin",
+      siteName: siteConfig.brand.name,
       images: [
         {
           url: "/og.png",
-          width: 1734,
-          height: 907,
-          alt: "XCoin — Built for the community. Ready for what’s next.",
+          width: 1200,
+          height: 630,
+          alt: "XQNT Coin — X Quantum Network Token. Launching soon.",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "XCoin — Built for the Community",
+      title: "XQNT Coin — X Quantum Network Token",
       description:
         "A community-first digital token experiment. Launching soon.",
       images: ["/og.png"],

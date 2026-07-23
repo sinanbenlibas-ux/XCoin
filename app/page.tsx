@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { siteConfig } from "./site-config";
 
 const navigation = [
   { label: "About", href: "#about" },
@@ -12,7 +13,7 @@ const pillars = [
     number: "01",
     title: "Community first",
     description:
-      "XCoin starts with participation. The community shapes the culture, conversation, and direction from day one.",
+      "XQNT Coin starts with participation. The community shapes the culture, conversation, and direction from day one.",
   },
   {
     number: "02",
@@ -97,17 +98,17 @@ const safeguards = [
 
 const faqs = [
   {
-    question: "Is XCoin live?",
+    question: "Is XQNT Coin live?",
     answer:
-      "Not yet. XCoin is currently in its community and planning phase. There is no official contract address or live market.",
+      "Not yet. XQNT Coin is currently in its community and planning phase. There is no official contract address or live market.",
   },
   {
-    question: "Can I buy XCoin now?",
+    question: "Can I buy XQNT Coin now?",
     answer:
-      "No. XCoin is not available for sale. Ignore any token, presale, or contract claiming to be official until it is announced on this website.",
+      "No. XQNT Coin is not available for sale. Ignore any token, presale, or contract claiming to be official until it is announced on this website.",
   },
   {
-    question: "What will XCoin be used for?",
+    question: "What will XQNT Coin be used for?",
     answer:
       "The initial focus is community participation. Specific utility will be tested and published before launch instead of being promised prematurely.",
   },
@@ -126,16 +127,16 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="XCoin home">
+        <a className="brand" href="#top" aria-label={`${siteConfig.brand.name} home`}>
           <Image
             className="brand-mark"
-            src="/xcoin-logo.png"
+            src={siteConfig.brand.logo}
             width={44}
             height={44}
             alt=""
             priority
           />
-          <span>XCOIN</span>
+          <span>{siteConfig.brand.shortName}</span>
         </a>
 
         <nav aria-label="Main navigation">
@@ -148,7 +149,7 @@ export default function Home() {
 
         <span className="launch-pill">
           <span className="status-dot" />
-          Launching soon
+          {siteConfig.status}
         </span>
       </header>
 
@@ -159,7 +160,7 @@ export default function Home() {
 
         <div className="hero-copy">
           <div className="eyebrow">
-            <span>Community-powered</span>
+            <span>{siteConfig.brand.expansion}</span>
             <span className="eyebrow-line" />
             <span>Built in the open</span>
           </div>
@@ -169,12 +170,12 @@ export default function Home() {
             starts with <span>you.</span>
           </h1>
           <p className="hero-description">
-            XCoin is a community-first digital token experiment designed around
-            participation, transparency, and utility that earns its place.
+            XQNT Coin is a community-first digital token experiment inspired by
+            open networks, participation, and utility that earns its place.
           </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#about">
-              Explore XCoin <ArrowUpRight />
+              Explore XQNT <ArrowUpRight />
             </a>
             <a className="button button-ghost" href="#roadmap">
               View roadmap
@@ -186,16 +187,16 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="hero-visual" aria-label="XCoin brand symbol">
+        <div className="hero-visual" aria-label={`${siteConfig.brand.name} brand symbol`}>
           <div className="visual-halo" aria-hidden="true" />
           <div className="visual-ring visual-ring-one" aria-hidden="true" />
           <div className="visual-ring visual-ring-two" aria-hidden="true" />
           <Image
             className="hero-logo"
-            src="/xcoin-logo.png"
+            src={siteConfig.brand.logo}
             width={620}
             height={620}
-            alt="XCoin X monogram inside a circular ring"
+            alt="XQNT angular monogram inside a quantum network ring"
             priority
           />
           <div className="orbit-label orbit-label-top">
@@ -217,7 +218,7 @@ export default function Home() {
       <section className="section about-section" id="about">
         <div className="section-heading split-heading">
           <div>
-            <span className="section-kicker">Why XCoin</span>
+            <span className="section-kicker">Why XQNT</span>
             <h2>
               A better way to begin
               <br />a digital community.
@@ -249,7 +250,7 @@ export default function Home() {
       <section className="section tokenomics-section" id="tokenomics">
         <div className="section-heading centered-heading">
           <span className="section-kicker">Proposed tokenomics</span>
-          <h2>One billion XCN. Every token accounted for.</h2>
+          <h2>One billion XQNT. Every token accounted for.</h2>
           <p>
             A transparent starting proposal designed for community participation
             and long-term development—not a final allocation.
@@ -261,7 +262,7 @@ export default function Home() {
             <div className="token-orbit" aria-hidden="true">
               <div className="token-core">
                 <Image
-                  src="/xcoin-logo.png"
+                  src={siteConfig.brand.logo}
                   width={132}
                   height={132}
                   alt=""
@@ -270,8 +271,8 @@ export default function Home() {
             </div>
             <div className="supply-stat">
               <span>Proposed total supply</span>
-              <strong>1,000,000,000</strong>
-              <em>XCN</em>
+              <strong>{siteConfig.supply.display}</strong>
+              <em>{siteConfig.brand.shortName}</em>
             </div>
           </div>
 
@@ -379,7 +380,7 @@ export default function Home() {
         <div className="community-glow" aria-hidden="true" />
         <Image
           className="community-logo"
-          src="/xcoin-logo.png"
+          src={siteConfig.brand.logo}
           width={180}
           height={180}
           alt=""
@@ -412,18 +413,18 @@ export default function Home() {
         <a className="brand" href="#top" aria-label="Back to the top">
           <Image
             className="brand-mark"
-            src="/xcoin-logo.png"
+            src={siteConfig.brand.logo}
             width={44}
             height={44}
             alt=""
           />
-          <span>XCOIN</span>
+          <span>{siteConfig.brand.shortName}</span>
         </a>
         <p>
-          XCoin is an early-stage community project. Nothing on this website is
+          XQNT Coin is an early-stage community project. Nothing on this website is
           financial advice or an offer to buy or sell any asset.
         </p>
-        <span>© 2026 XCoin</span>
+        <span>© 2026 {siteConfig.brand.name} · {siteConfig.brand.domain}</span>
       </footer>
     </main>
   );
