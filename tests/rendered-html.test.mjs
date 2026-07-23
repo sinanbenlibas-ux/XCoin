@@ -32,6 +32,8 @@ test("server-renders the XQNT Coin launch page", async () => {
   assert.match(html, /The next chapter/);
   assert.match(html, /Website live/i);
   assert.match(html, /Token pre-launch/i);
+  assert.doesNotMatch(html, /class="launch-pill"/i);
+  assert.match(html, />Sign in<\/a>/i);
   assert.match(html, /X Quantum Network Token/i);
   assert.match(html, /1,000,000,000/);
   assert.match(html, /Proposed tokenomics/i);

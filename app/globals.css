@@ -129,22 +129,6 @@ nav a:hover::after {
   transform: scaleX(1);
 }
 
-.launch-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  min-height: 38px;
-  padding: 0 15px;
-  border: 1px solid rgba(33, 212, 253, 0.22);
-  border-radius: 999px;
-  background: rgba(33, 212, 253, 0.07);
-  color: #c9f7ff;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
 .header-actions {
   display: flex;
   align-items: center;
@@ -177,6 +161,23 @@ nav a:hover::after {
   background: rgba(33, 212, 253, 0.07);
   color: #fff;
   transform: translateY(-1px);
+}
+
+.portal-sign-in {
+  gap: 10px;
+  padding: 0 18px;
+  border-color: rgba(33, 212, 253, 0.38);
+  background: rgba(33, 212, 253, 0.1);
+  color: #d9fbff;
+}
+
+.portal-sign-in::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px rgba(33, 212, 253, 0.8);
 }
 
 .status-dot {
@@ -2231,12 +2232,6 @@ footer p {
   .brand-mark {
     width: 32px;
     height: 32px;
-  }
-
-  .launch-pill {
-    min-height: 34px;
-    padding: 0 11px;
-    font-size: 0.56rem;
   }
 
   .portal-link {

@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "brand:generate": "node scripts/generate-brand-assets.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -36,6 +37,7 @@
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.11",
     "react-server-dom-webpack": "19.2.6",
+    "sharp": "^0.35.3",
     "tailwindcss": "4.2.1",
     "tsx": "^4.23.1",
     "typescript": "5.9.3",

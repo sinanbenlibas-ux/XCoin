@@ -149,12 +149,8 @@ export default function Home() {
         </nav>
 
         <div className="header-actions">
-        <span className="launch-pill">
-          <span className="status-dot" />
-          {siteConfig.status}
-          </span>
-          <Link className="portal-link" href="/login">
-            Portal
+          <Link className="portal-link portal-sign-in" href="/login">
+            Sign in
           </Link>
         </div>
       </header>
@@ -201,7 +197,7 @@ export default function Home() {
             src={siteConfig.brand.logo}
             width={620}
             height={620}
-            alt="XQNT angular monogram inside a quantum network ring"
+            alt="XQNT X monogram inside a circular Q mark"
             priority
           />
           <div className="orbit-label orbit-label-top">
@@ -420,7 +416,7 @@ export default function Home() {
           <Link href="/terms">Terms</Link>
           <Link href="/risk">Risk</Link>
           <Link href="/security">Security</Link>
-          <Link href="/login">Portal</Link>
+          <Link href="/login">Sign in</Link>
         </div>
       </footer>
     </main>

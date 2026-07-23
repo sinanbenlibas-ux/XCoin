@@ -7,6 +7,11 @@ The website is live while the token remains in pre-launch. There is no token
 sale, contract address, price, DEX listing, custody, or blockchain transaction
 in this release.
 
+## Launch documentation
+
+The step-by-step Turkish launch checklist is available in
+[docs/XQNT-COIN-LAUNCH-GUIDE-TR.md](docs/XQNT-COIN-LAUNCH-GUIDE-TR.md).
+
 ## Local development
 
 ```bash
@@ -48,6 +53,7 @@ required authentication value is missing.
 npm run build
 npm run lint
 npm test
+npm run brand:generate
 ```
 
 Brand and launch details are centralized in `app/site-config.ts`. Authentication
