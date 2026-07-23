@@ -4,8 +4,10 @@ import { useAppKit } from "@reown/appkit/react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SiweMessage } from "siwe";
+import { formatUnits } from "viem";
 import {
   useAccount,
+  useBalance,
   useChainId,
   useDisconnect,
   useSignMessage,
@@ -42,7 +44,25 @@ export default function WalletPortal() {
     null,
   );
   const [error, setError] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
   const wasConnected = useRef(false);
+  const authenticatedAddress = session?.authenticated
+    ? session.address
+    : undefined;
+  const authenticatedChainId = session?.authenticated
+    ? session.chainId
+    : undefined;
+  const nativeBalance = useBalance({
+    address: authenticatedAddress,
+    chainId: authenticatedChainId,
+    query: {
+      enabled:
+        Boolean(session?.authenticated) &&
+        Boolean(isConnected) &&
+        !Boolean(sessionMismatch(session, address, chainId)),
+      staleTime: 30_000,
+    },
+  });
 
   const clearSession = useCallback(async () => {
     try {
@@ -99,6 +119,13 @@ export default function WalletPortal() {
     }
     wasConnected.current = isConnected;
   }, [clearSession, isConnected, session]);
+
+  useEffect(() => {
+    if (!session?.authenticated) return;
+
+    const timer = window.setInterval(() => setCurrentTime(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
+  }, [session]);
 
   const signIn = async () => {
     if (!address || !isConnected) {
@@ -194,12 +221,7 @@ export default function WalletPortal() {
     }
   };
 
-  const sessionMismatch =
-    session?.authenticated &&
-    isConnected &&
-    address &&
-    (address.toLowerCase() !== session.address.toLowerCase() ||
-      chainId !== session.chainId);
+  const hasSessionMismatch = sessionMismatch(session, address, chainId);
 
   if (loading) {
     return (
@@ -210,14 +232,22 @@ export default function WalletPortal() {
     );
   }
 
-  if (session?.authenticated && !sessionMismatch) {
+  if (session?.authenticated && !hasSessionMismatch) {
+    const explorerUrl = addressExplorerUrl(
+      session.address,
+      session.chainId,
+    );
+
     return (
       <div className="portal-card portal-dashboard">
         <div className="portal-card-heading">
-          <span className="portal-status">
-            <span className="status-dot" />
-            Authenticated
-          </span>
+          <div className="portal-status-row">
+            <span className="portal-status">
+              <span className="status-dot" />
+              Authenticated
+            </span>
+            <span className="portal-readonly-badge">Read-only</span>
+          </div>
           <h2>Member dashboard</h2>
           <p>Your wallet signature has been verified. No funds were moved.</p>
         </div>
@@ -232,14 +262,53 @@ export default function WalletPortal() {
             <dd>{networkName(session.chainId)}</dd>
           </div>
           <div>
-            <dt>Website</dt>
-            <dd className="portal-positive">Live</dd>
+            <dt>Session</dt>
+            <dd>{sessionTimeRemaining(session.expiresAt, currentTime)}</dd>
           </div>
           <div>
-            <dt>Token</dt>
-            <dd>Pre-launch</dd>
+            <dt>Access</dt>
+            <dd className="portal-positive">Read only</dd>
           </div>
         </dl>
+
+        <section className="portal-assets" aria-labelledby="wallet-overview-title">
+          <div className="portal-assets-heading">
+            <div>
+              <span>Connected wallet</span>
+              <h3 id="wallet-overview-title">Wallet overview</h3>
+            </div>
+            <span className="portal-live-indicator">Live network data</span>
+          </div>
+
+          <div className="portal-asset-grid">
+            <article className="portal-asset-card">
+              <span>{networkName(session.chainId)} balance</span>
+              <strong aria-live="polite">
+                {nativeBalance.isPending
+                  ? "Loading..."
+                  : nativeBalance.isError
+                    ? "Unavailable"
+                    : formatNativeBalance(nativeBalance.data)}
+              </strong>
+              <small>Read directly from the active network</small>
+            </article>
+            <article className="portal-asset-card portal-asset-card-muted">
+              <span>XQNT balance</span>
+              <strong>Not available</strong>
+              <small>Activates after the official contract launches</small>
+            </article>
+          </div>
+
+          <a
+            className="portal-explorer-link"
+            href={explorerUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View address on {explorerName(session.chainId)}
+            <span aria-hidden="true">↗</span>
+          </a>
+        </section>
 
         <div className="portal-project-status">
           <div>
@@ -353,7 +422,7 @@ export default function WalletPortal() {
         </p>
       )}
 
-      {sessionMismatch && (
+      {hasSessionMismatch && (
         <p className="portal-error" role="alert">
           Your account or network changed. Sign the new session message to
           continue.
@@ -377,6 +446,75 @@ function shortAddress(address: string) {
 
 function networkName(chainId: number) {
   return NETWORKS[chainId as keyof typeof NETWORKS] ?? `Chain ${chainId}`;
+}
+
+function sessionMismatch(
+  session: Session | null,
+  address: `0x${string}` | undefined,
+  chainId: number,
+) {
+  return Boolean(
+    session?.authenticated &&
+      address &&
+      (address.toLowerCase() !== session.address.toLowerCase() ||
+        chainId !== session.chainId),
+  );
+}
+
+function sessionTimeRemaining(expiresAt: string, currentTime: number) {
+  const remaining = Math.max(0, Date.parse(expiresAt) - currentTime);
+  const totalMinutes = Math.max(0, Math.ceil(remaining / 60_000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours === 0 && minutes === 0) {
+    return "Expiring now";
+  }
+
+  return hours > 0 ? `${hours}h ${minutes}m left` : `${minutes}m left`;
+}
+
+function formatNativeBalance(
+  balance:
+    | { value: bigint; decimals: number; symbol: string }
+    | undefined,
+) {
+  if (!balance) {
+    return "Unavailable";
+  }
+
+  const formatted = formatUnits(balance.value, balance.decimals);
+  const value = Number(formatted);
+  if (!Number.isFinite(value)) {
+    return "Unavailable";
+  }
+
+  if (value > 0 && value < 0.000001) {
+    return `<0.000001 ${balance.symbol}`;
+  }
+
+  const display = new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 6,
+  }).format(value);
+
+  return `${display} ${balance.symbol}`;
+}
+
+function addressExplorerUrl(address: string, chainId: number) {
+  const baseUrl =
+    chainId === 8453
+      ? "https://basescan.org"
+      : chainId === 56
+        ? "https://bscscan.com"
+        : "https://etherscan.io";
+
+  return `${baseUrl}/address/${address}`;
+}
+
+function explorerName(chainId: number) {
+  if (chainId === 8453) return "BaseScan";
+  if (chainId === 56) return "BscScan";
+  return "Etherscan";
 }
 
 function readableError(code: string) {
