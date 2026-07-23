@@ -388,25 +388,9 @@ export default function Home() {
         <span className="section-kicker">The community is opening soon</span>
         <h2>Be early to what comes next.</h2>
         <p>
-          Official X and Telegram channels are being prepared. Links will appear
-          here when they are ready.
+          Official launch announcements and verified project links will appear
+          on {siteConfig.brand.domain} first.
         </p>
-        <div className="social-actions" aria-label="Community channels">
-          <button className="social-button" type="button" disabled>
-            <span className="social-letter">X</span>
-            <span>
-              Follow on X
-              <small>Coming soon</small>
-            </span>
-          </button>
-          <button className="social-button" type="button" disabled>
-            <span className="social-letter">TG</span>
-            <span>
-              Join Telegram
-              <small>Coming soon</small>
-            </span>
-          </button>
-        </div>
       </section>
 
       <footer>

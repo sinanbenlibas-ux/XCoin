@@ -1126,60 +1126,6 @@ details p {
   margin-top: 20px;
 }
 
-.social-actions {
-  margin-top: 34px;
-  display: flex;
-  gap: 12px;
-}
-
-.social-button {
-  min-width: 200px;
-  min-height: 62px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.035);
-  color: #b9c1d4;
-  font: inherit;
-  text-align: left;
-}
-
-.social-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.72;
-}
-
-.social-letter {
-  width: 34px;
-  height: 34px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 9px;
-  color: #fff;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.73rem;
-  font-weight: 700;
-}
-
-.social-button > span:last-child {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  font-size: 0.78rem;
-}
-
-.social-button small {
-  color: #69758f;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
 footer {
   width: min(calc(100% - 48px), var(--container));
   min-height: 170px;
@@ -1536,14 +1482,6 @@ footer > span {
     border-radius: 24px;
   }
 
-  .social-actions {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .social-button {
-    width: 100%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

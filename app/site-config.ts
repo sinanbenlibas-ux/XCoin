@@ -11,8 +11,4 @@ export const siteConfig = {
     display: "1,000,000,000",
     value: 1_000_000_000,
   },
-  socials: {
-    x: null,
-    telegram: null,
-  },
 } as const;

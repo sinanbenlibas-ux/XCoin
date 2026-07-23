@@ -38,6 +38,7 @@ test("server-renders the XQNT Coin launch page", async () => {
   assert.match(html, /Nothing on this website is financial advice/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
   assert.doesNotMatch(html, /wallet-connect|presale checkout/i);
+  assert.doesNotMatch(html, /Follow on X|Join Telegram/i);
 });
 
 test("token allocation totals one hundred percent", () => {
