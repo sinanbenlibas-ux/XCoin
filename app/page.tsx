@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import PortalStatusLink from "./components/PortalStatusLink";
 import { siteConfig } from "./site-config";
 
 const navigation = [
@@ -149,9 +150,7 @@ export default function Home() {
         </nav>
 
         <div className="header-actions">
-          <Link className="portal-link portal-sign-in" href="/login">
-            Sign in
-          </Link>
+          <PortalStatusLink />
         </div>
       </header>
 
