@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-async function render() {
+async function render(path = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("http://localhost/", {
+    new Request(`http://localhost${path}`, {
       headers: { accept: "text/html" },
     }),
     {
@@ -39,6 +39,26 @@ test("server-renders the XQNT Coin launch page", async () => {
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
   assert.doesNotMatch(html, /wallet-connect|presale checkout/i);
   assert.doesNotMatch(html, /Follow on X|Join Telegram/i);
+  assert.match(html, /href="\/login"/i);
+  assert.match(html, /href="\/cookies"/i);
+});
+
+test("server-renders the portal preview without collecting credentials", async () => {
+  const response = await render("/login");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /The XQNT Portal is being prepared/i);
+  assert.match(html, /No accounts or credentials are being collected yet/i);
+  assert.doesNotMatch(html, /type="password"/i);
+});
+
+test("server-renders the cookies policy", async () => {
+  const response = await render("/cookies");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+  assert.match(html, /Cookies Policy/i);
+  assert.match(html, /xqnt_cookie_consent/i);
+  assert.match(html, /does not currently run analytics/i);
 });
 
 test("token allocation totals one hundred percent", () => {

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
+import CookieConsent from "./components/CookieConsent";
 import { siteConfig } from "./site-config";
 
 const geistSans = Geist({
@@ -81,6 +82,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

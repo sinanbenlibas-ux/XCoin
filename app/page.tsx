@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "./site-config";
 
 const navigation = [
@@ -147,10 +148,15 @@ export default function Home() {
           ))}
         </nav>
 
-        <span className="launch-pill">
-          <span className="status-dot" />
-          {siteConfig.status}
-        </span>
+        <div className="header-actions">
+          <span className="launch-pill">
+            <span className="status-dot" />
+            {siteConfig.status}
+          </span>
+          <Link className="portal-link" href="/login">
+            Portal
+          </Link>
+        </div>
       </header>
 
       <section className="hero" id="top">
@@ -408,7 +414,11 @@ export default function Home() {
           XQNT Coin is an early-stage community project. Nothing on this website is
           financial advice or an offer to buy or sell any asset.
         </p>
-        <span>© 2026 {siteConfig.brand.name} · {siteConfig.brand.domain}</span>
+        <div className="footer-meta">
+          <span>© 2026 {siteConfig.brand.name}</span>
+          <Link href="/cookies">Cookies</Link>
+          <Link href="/login">Portal</Link>
+        </div>
       </footer>
     </main>
   );
