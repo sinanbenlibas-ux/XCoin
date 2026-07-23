@@ -99,9 +99,9 @@ const safeguards = [
 
 const faqs = [
   {
-    question: "Is XQNT Coin live?",
+    question: "Is the XQNT token live?",
     answer:
-      "Not yet. XQNT Coin is currently in its community and planning phase. There is no official contract address or live market.",
+      "No. The official website is live, but the token remains in its planning phase. There is no official contract address or live market.",
   },
   {
     question: "Can I buy XQNT Coin now?",
@@ -149,9 +149,9 @@ export default function Home() {
         </nav>
 
         <div className="header-actions">
-          <span className="launch-pill">
-            <span className="status-dot" />
-            {siteConfig.status}
+        <span className="launch-pill">
+          <span className="status-dot" />
+          {siteConfig.status}
           </span>
           <Link className="portal-link" href="/login">
             Portal
@@ -188,8 +188,7 @@ export default function Home() {
             </a>
           </div>
           <p className="hero-note">
-            No presale. No contract address. Official launch updates will appear
-            here first.
+            Website live. Token pre-launch. No presale or contract address.
           </p>
         </div>
 
@@ -211,7 +210,7 @@ export default function Home() {
           </div>
           <div className="orbit-label orbit-label-bottom">
             <span>Status</span>
-            <strong>Pre-launch</strong>
+            <strong>{siteConfig.tokenStatus}</strong>
           </div>
         </div>
 
@@ -417,6 +416,10 @@ export default function Home() {
         <div className="footer-meta">
           <span>© 2026 {siteConfig.brand.name}</span>
           <Link href="/cookies">Cookies</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/risk">Risk</Link>
+          <Link href="/security">Security</Link>
           <Link href="/login">Portal</Link>
         </div>
       </footer>

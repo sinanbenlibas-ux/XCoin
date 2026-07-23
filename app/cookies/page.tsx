@@ -85,6 +85,16 @@ export default function CookiesPolicyPage() {
           </p>
         </section>
 
+        <section>
+          <h2>Wallet connectivity</h2>
+          <p>
+            Reown/WalletConnect network requests begin only when you choose to
+            connect a wallet in the Portal. This functionality is necessary to
+            show wallet choices and establish a requested connection. AppKit
+            analytics are disabled.
+          </p>
+        </section>
+
         <div className="policy-notice">
           This page describes the site&apos;s current technical behavior and is
           not a substitute for jurisdiction-specific legal advice.

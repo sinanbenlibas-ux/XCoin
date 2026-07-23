@@ -30,11 +30,12 @@ test("server-renders the XQNT Coin launch page", async () => {
   const html = await response.text();
   assert.match(html, /<title>XQNT Coin — X Quantum Network Token<\/title>/i);
   assert.match(html, /The next chapter/);
-  assert.match(html, /Launching soon/i);
+  assert.match(html, /Website live/i);
+  assert.match(html, /Token pre-launch/i);
   assert.match(html, /X Quantum Network Token/i);
   assert.match(html, /1,000,000,000/);
   assert.match(html, /Proposed tokenomics/i);
-  assert.match(html, /No presale\. No contract address\./i);
+  assert.match(html, /No presale or contract address\./i);
   assert.match(html, /Nothing on this website is financial advice/i);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton/i);
   assert.doesNotMatch(html, /wallet-connect|presale checkout/i);
@@ -43,12 +44,12 @@ test("server-renders the XQNT Coin launch page", async () => {
   assert.match(html, /href="\/cookies"/i);
 });
 
-test("server-renders the portal preview without collecting credentials", async () => {
+test("server-renders the secure portal without collecting passwords", async () => {
   const response = await render("/login");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /The XQNT Portal is being prepared/i);
-  assert.match(html, /No accounts or credentials are being collected yet/i);
+  assert.match(html, /One signature\. Zero transactions\./i);
+  assert.doesNotMatch(html, /Preview mode/i);
   assert.doesNotMatch(html, /type="password"/i);
 });
 
@@ -59,6 +60,26 @@ test("server-renders the cookies policy", async () => {
   assert.match(html, /Cookies Policy/i);
   assert.match(html, /xqnt_cookie_consent/i);
   assert.match(html, /does not currently run analytics/i);
+});
+
+for (const [path, title] of [
+  ["/privacy", "Privacy Policy"],
+  ["/terms", "Terms of Use"],
+  ["/risk", "Risk Disclosure"],
+  ["/security", "Security &amp; Transparency"],
+]) {
+  test(`server-renders ${path}`, async () => {
+    const response = await render(path);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, new RegExp(title, "i"));
+  });
+}
+
+test("wallet nonce endpoint fails closed without a server secret", async () => {
+  const response = await render("/api/auth/nonce");
+  assert.equal(response.status, 503);
+  assert.deepEqual(await response.json(), { error: "AUTH_NOT_CONFIGURED" });
 });
 
 test("token allocation totals one hundred percent", () => {

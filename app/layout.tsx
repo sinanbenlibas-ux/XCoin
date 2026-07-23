@@ -40,12 +40,12 @@ export async function generateMetadata(): Promise<Metadata> {
       "token project",
     ],
     alternates: {
-      canonical: "/",
+      canonical: siteConfig.siteUrl,
     },
     openGraph: {
       title: "XQNT Coin — X Quantum Network Token",
       description:
-        "A community-first digital token experiment. Launching soon.",
+        "The official XQNT Coin website is live. The token remains in pre-launch.",
       type: "website",
       locale: "en_US",
       siteName: siteConfig.brand.name,
@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
           url: "/og.png",
           width: 1200,
           height: 630,
-          alt: "XQNT Coin — X Quantum Network Token. Launching soon.",
+          alt: "XQNT Coin — official website live, token pre-launch.",
         },
       ],
     },
@@ -62,7 +62,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "XQNT Coin — X Quantum Network Token",
       description:
-        "A community-first digital token experiment. Launching soon.",
+        "The official XQNT Coin website is live. The token remains in pre-launch.",
       images: ["/og.png"],
     },
   };
