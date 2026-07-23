@@ -7,12 +7,17 @@
   },
   "scripts": {
     "brand:generate": "node scripts/generate-brand-assets.mjs",
+    "contracts:build": "forge build --root contracts",
+    "contracts:test": "forge test --root contracts -vv",
+    "contracts:surface": "node scripts/check-contract-surface.mjs",
+    "launch:safe-batches": "node scripts/build-launch-safe-batches.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "build:sites": "vinext build",
-    "test": "npm run build:sites && node --test tests/rendered-html.test.mjs && tsx --test tests/auth.test.ts",
-    "lint": "eslint app tests"
+    "test": "npm run build:sites && node --test tests/rendered-html.test.mjs tests/launch-math.test.mjs && tsx --test tests/auth.test.ts",
+    "lint": "eslint app tests scripts",
+    "verify": "npm run lint && npm run contracts:build && npm run contracts:test && npm run contracts:surface && npm test && npm run build"
   },
   "dependencies": {
     "@reown/appkit": "^1.8.23",

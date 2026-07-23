@@ -10,9 +10,11 @@ import {
   useBalance,
   useChainId,
   useDisconnect,
+  useReadContract,
   useSignMessage,
   useSwitchChain,
 } from "wagmi";
+import { launchConfig, tokenIsLive } from "../launch-config";
 
 type Session =
   | { authenticated: false; error?: string }
@@ -30,6 +32,15 @@ const NETWORKS = {
 } as const;
 
 const ALLOWED_CHAIN_IDS = Object.keys(NETWORKS).map(Number);
+const XQNT_BALANCE_ABI = [
+  {
+    type: "function",
+    name: "balanceOf",
+    stateMutability: "view",
+    inputs: [{ name: "account", type: "address" }],
+    outputs: [{ name: "", type: "uint256" }],
+  },
+] as const;
 
 export default function WalletPortal() {
   const { open } = useAppKit();
@@ -63,6 +74,23 @@ export default function WalletPortal() {
       staleTime: 30_000,
     },
   });
+  const xqntBalance = useReadContract({
+    abi: XQNT_BALANCE_ABI,
+    address: launchConfig.contract.address ?? undefined,
+    functionName: "balanceOf",
+    args: authenticatedAddress ? [authenticatedAddress] : undefined,
+    chainId: launchConfig.chain.chainId,
+    query: {
+      enabled:
+        Boolean(session?.authenticated) &&
+        Boolean(launchConfig.contract.address) &&
+        launchConfig.contract.verified,
+      staleTime: 30_000,
+    },
+  });
+  const isVerifiedHolder =
+    tokenIsLive &&
+    Boolean(xqntBalance.data && xqntBalance.data > BigInt(0));
 
   const clearSession = useCallback(async () => {
     try {
@@ -246,7 +274,9 @@ export default function WalletPortal() {
               <span className="status-dot" />
               Authenticated
             </span>
-            <span className="portal-readonly-badge">Read-only</span>
+            <span className="portal-readonly-badge">
+              {isVerifiedHolder ? "Verified holder" : "Read-only"}
+            </span>
           </div>
           <h2>Member dashboard</h2>
           <p>Your wallet signature has been verified. No funds were moved.</p>
@@ -294,8 +324,22 @@ export default function WalletPortal() {
             </article>
             <article className="portal-asset-card portal-asset-card-muted">
               <span>XQNT balance</span>
-              <strong>Not available</strong>
-              <small>Activates after the official contract launches</small>
+              <strong>
+                {!tokenIsLive
+                  ? "Not available"
+                  : xqntBalance.isPending
+                    ? "Loading..."
+                    : xqntBalance.isError
+                      ? "Unavailable"
+                      : formatTokenBalance(xqntBalance.data)}
+              </strong>
+              <small>
+                {isVerifiedHolder
+                  ? "Verified on Base from the official contract"
+                  : tokenIsLive
+                    ? "Read directly from the official Base contract"
+                    : "Activates after the verified Base launch"}
+              </small>
             </article>
           </div>
 
@@ -313,11 +357,16 @@ export default function WalletPortal() {
         <div className="portal-project-status">
           <div>
             <span>Official contract</span>
-            <strong>Not deployed</strong>
+            <strong>
+              {tokenIsLive && launchConfig.contract.address
+                ? shortAddress(launchConfig.contract.address)
+                : "Not deployed"}
+            </strong>
           </div>
           <p>
-            Ignore any contract, sale, or market claiming to represent XQNT
-            until a verified address appears on this domain.
+            {tokenIsLive
+              ? "Always verify this address against BaseScan and the signed launch manifest."
+              : "Ignore any contract, sale, or market claiming to represent XQNT until a verified address appears on this domain."}
           </p>
         </div>
 
@@ -498,6 +547,17 @@ function formatNativeBalance(
   }).format(value);
 
   return `${display} ${balance.symbol}`;
+}
+
+function formatTokenBalance(
+  balance: bigint | undefined,
+) {
+  if (!balance) return "Unavailable";
+  const value = Number(formatUnits(balance, 18));
+  if (!Number.isFinite(value)) return "Unavailable";
+  return `${new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 4,
+  }).format(value)} XQNT`;
 }
 
 function addressExplorerUrl(address: string, chainId: number) {

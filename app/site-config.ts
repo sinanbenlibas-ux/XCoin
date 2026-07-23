@@ -10,7 +10,8 @@ export const siteConfig = {
   siteUrl: "https://www.xqntcoin.com",
   repository: "https://github.com/sinanbenlibas-ux/XCoin",
   status: "Website live",
-  tokenStatus: "Token pre-launch",
+  tokenStatus: "Token pre-launch on Base",
+  tokenNetwork: "Base",
   supportedNetworks: ["Ethereum", "Base", "BNB Smart Chain"],
   supply: {
     display: "1,000,000,000",

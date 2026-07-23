@@ -102,7 +102,12 @@ const faqs = [
   {
     question: "Is the XQNT token live?",
     answer:
-      "No. The official website is live, but the token remains in its planning phase. There is no official contract address or live market.",
+      "No. The official website is live and the Base launch source is public, but the token remains pre-launch. There is no official contract address or live market.",
+  },
+  {
+    question: "Which network and DEX are planned?",
+    answer:
+      "XQNT is planned as a fixed-supply ERC-20 on Base with an XQNT/USDC Uniswap v3 pool. Mainnet remains blocked until the legal, multisig, testnet, and independent-review gates are complete.",
   },
   {
     question: "Can I buy XQNT Coin now?",
@@ -183,7 +188,7 @@ export default function Home() {
             </a>
           </div>
           <p className="hero-note">
-            Website live. Token pre-launch. No presale or contract address.
+            Website live. Base token pre-launch. No presale or contract address.
           </p>
         </div>
 

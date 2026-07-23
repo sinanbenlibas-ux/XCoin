@@ -16,7 +16,9 @@ export default function RiskPage() {
       intro={
         <p>
           XQNT is an early-stage concept. No official token contract, market,
-          price, presale, or investment product exists at this time.
+          price, presale, or investment product exists at this time. Base and
+          Uniswap v3 are the planned launch infrastructure, not evidence of a
+          completed launch.
         </p>
       }
       sections={[
@@ -44,10 +46,30 @@ export default function RiskPage() {
         {
           title: "Market and liquidity risk",
           content: (
+            <>
+              <p>
+                The proposed initial pool contains only 1,000 USDC and
+                100,000,000 XQNT. This is extremely shallow liquidity. A trade
+                of roughly 100 USDC can move the spot price by about 20% before
+                fees, slippage settings, arbitrage, and other market activity.
+              </p>
+              <p>
+                The reference opening ratio of 0.00001 USDC per XQNT is not
+                guaranteed and is not a valuation or promise. A future token
+                may have no lasting market, liquidity, or value and can result
+                in complete financial loss.
+              </p>
+            </>
+          ),
+        },
+        {
+          title: "Liquidity control",
+          content: (
             <p>
-              If a token is launched later, it may have no market, liquidity, or
-              value. Digital assets can be volatile and may result in complete
-              financial loss.
+              The proposed Uniswap position NFT will belong to a 2-of-3
+              Liquidity Safe. It will not be burned or represented as
+              permanently locked. Two Safe signers can reduce or remove the
+              liquidity, so participants must treat it as withdrawable.
             </p>
           ),
         },

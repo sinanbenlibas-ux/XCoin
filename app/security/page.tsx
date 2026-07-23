@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import LegalPage from "../components/LegalPage";
 import { siteConfig } from "../site-config";
+import { launchConfig, tokenIsLive } from "../launch-config";
 
 export const metadata: Metadata = {
   title: "Security & Transparency — XQNT Coin",
@@ -36,11 +37,15 @@ export default function SecurityPage() {
               </li>
               <li>
                 <span>Token status</span>
-                <strong>Pre-launch</strong>
+                <strong>{tokenIsLive ? "Live on Base" : "Pre-launch"}</strong>
               </li>
               <li>
                 <span>Official contract</span>
-                <strong>Not deployed</strong>
+                <strong>
+                  {tokenIsLive && launchConfig.contract.address
+                    ? launchConfig.contract.address
+                    : "Not deployed"}
+                </strong>
               </li>
               <li>
                 <span>Token sale</span>
@@ -61,12 +66,36 @@ export default function SecurityPage() {
           ),
         },
         {
-          title: "Supported networks",
+          title: "Authentication and launch networks",
           content: (
             <p>
               Wallet authentication accepts Ethereum, Base, and BNB Smart
-              Chain. Network support for signing in does not indicate where a
-              future token will be deployed.
+              Chain. XQNT itself is planned only for Base mainnet (chain ID
+              8453); sign-in network support is not a token deployment claim.
+            </p>
+          ),
+        },
+        {
+          title: "Planned immutable token",
+          content: (
+            <p>
+              The published source fixes supply at 1,000,000,000 XQNT and has
+              no external mint, owner, pause, blacklist, transfer tax, permit,
+              proxy, or upgrade function. This description remains
+              &ldquo;planned&rdquo; until deployed bytecode and constructor
+              arguments are independently matched to the reviewed source.
+            </p>
+          ),
+        },
+        {
+          title: "Treasury, vesting, and liquidity",
+          content: (
+            <p>
+              Five project accounts are planned as 2-of-3 Safes. The team
+              allocation is planned to remain locked for 365 days and then vest
+              linearly for 1,095 days. The Uniswap v3 LP NFT will be held by the
+              Liquidity Safe and will remain withdrawable; it is not burned or
+              permanently locked.
             </p>
           ),
         },
@@ -93,8 +122,9 @@ export default function SecurityPage() {
             <p>
               Independent contract review, published allocation addresses,
               multisig treasury control, vesting details, and verified explorer
-              links remain launch requirements. They will not be marked
-              complete before evidence is public.
+              links remain launch requirements. Mainnet is also blocked until
+              the Indonesian legal entity and written legal opinion are
+              recorded. Nothing is marked complete before evidence is public.
             </p>
           ),
         },

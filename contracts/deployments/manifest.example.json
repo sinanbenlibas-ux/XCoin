@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "example-only",
+  "chainId": 84532,
+  "network": "Base Sepolia",
+  "sourceCommit": null,
+  "releaseTag": null,
+  "compiler": {
+    "solc": "0.8.36",
+    "optimizer": true,
+    "optimizerRuns": 200,
+    "evmVersion": "cancun",
+    "openzeppelinContracts": "5.6.1"
+  },
+  "deployment": {
+    "token": null,
+    "vesting": null,
+    "transactionHash": null,
+    "blockNumber": null,
+    "constructor": {
+      "distributionSafe": null,
+      "teamSafe": null,
+      "launchTimestamp": null
+    }
+  },
+  "safes": {
+    "threshold": "2/3",
+    "community": null,
+    "liquidity": null,
+    "treasury": null,
+    "team": null,
+    "reserve": null
+  },
+  "allocations": {
+    "community": "400000000000000000000000000",
+    "liquidity": "200000000000000000000000000",
+    "treasury": "200000000000000000000000000",
+    "teamVesting": "150000000000000000000000000",
+    "reserve": "50000000000000000000000000"
+  },
+  "pool": {
+    "address": null,
+    "fee": 3000,
+    "positionId": null,
+    "liquiditySafeOwnsNft": null,
+    "xqnt": "100000000000000000000000000",
+    "usdc": "1000000000",
+    "transactionHash": null
+  },
+  "evidence": {
+    "legalEntityName": null,
+    "legalOpinionSha256": null,
+    "reviewReportUrl": null,
+    "reviewReportSha256": null,
+    "addressVerifierOne": null,
+    "addressVerifierTwo": null
+  }
+}

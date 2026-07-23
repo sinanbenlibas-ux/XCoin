@@ -43,5 +43,9 @@ next-env.d.ts
 /outputs/
 /work/
 /tmp/
+contracts/cache/
+contracts/out/
+contracts/deployments/generated/
+broadcast/
 /.codex-*.log
 /.gh-auth*.log
